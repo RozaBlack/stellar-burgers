@@ -36,10 +36,7 @@ export const getOrder = createAsyncThunk(
 
 export const createOrder = createAsyncThunk(
   'order/create',
-  async (order: string[]) => {
-    console.log(order);
-    return await orderBurgerApi(order);
-  }
+  async (order: string[]) => await orderBurgerApi(order)
 );
 
 export const ordersSlice = createSlice({

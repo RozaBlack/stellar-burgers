@@ -115,7 +115,6 @@ export const orderBurgerApi = (data: string[]) =>
       ingredients: data
     })
   }).then((data) => {
-    console.log(data);
     if (data?.success) return data;
     return Promise.reject(data);
   });

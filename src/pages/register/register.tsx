@@ -1,13 +1,18 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { RegisterUI } from '@ui-pages';
 
-import { useDispatch } from '../../services/store';
-import { registerUser } from '../../services/slices/user';
+import { useDispatch, useSelector } from '../../services/store';
+import {
+  registerUser,
+  getRegisterErrorMessageSelector
+} from '../../services/slices/user';
 import { useNavigate } from 'react-router-dom';
 
 export const Register: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const errorText = useSelector(getRegisterErrorMessageSelector);
 
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
@@ -28,7 +33,7 @@ export const Register: FC = () => {
 
   return (
     <RegisterUI
-      errorText=''
+      errorText={errorText}
       email={email}
       userName={userName}
       password={password}
