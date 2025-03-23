@@ -10,14 +10,14 @@ import { useParams } from 'react-router-dom';
 
 export const OrderInfo: FC = () => {
   const dispatch = useDispatch();
-  const number = Number(useParams());
+  const { number } = useParams();
   /** TODO: взять переменные orderData и ingredients из стора */
   const orderData = useSelector(getOrderSelector);
 
   const ingredients = useSelector(getIngredientsSelector);
 
   useEffect(() => {
-    dispatch(fetchOrder(number));
+    dispatch(fetchOrder(Number(number)));
   }, [dispatch]);
 
   /* Готовим данные для отображения */

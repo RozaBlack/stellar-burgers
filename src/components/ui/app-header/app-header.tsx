@@ -8,7 +8,7 @@ import {
   ProfileIcon
 } from '@zlden/react-developer-burger-ui-components';
 
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import clsx from 'clsx';
 
 export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
@@ -34,9 +34,11 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
           )}
         </NavLink>
       </div>
-      <div className={styles.logo}>
-        <Logo className='' />
-      </div>
+      <Link to='/' className={clsx(styles.link, 'p-8')}>
+        <div className={styles.logo}>
+          <Logo className='' />
+        </div>
+      </Link>
       <div className={styles.link_position_last}>
         <NavLink to='/profile' className={clsx(styles.navlink, 'p-4')}>
           {({ isActive }) => (
@@ -52,3 +54,10 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
     </nav>
   </header>
 );
+/*  
+<Link to='/' className={clsx(styles.link, 'p-4')}>
+        <div className={styles.logo}>
+          <Logo className='' />
+        </div>
+      </Link>
+      */

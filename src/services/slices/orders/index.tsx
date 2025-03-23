@@ -75,16 +75,13 @@ export const ordersSlice = createSlice({
       })
       .addCase(fetchOrder.pending, (state) => {
         state.isLoadingOrder = true;
-        //state.error = null;
       })
-      .addCase(fetchOrder.rejected, (state, action) => {
+      .addCase(fetchOrder.rejected, (state) => {
         state.isLoadingOrder = false;
-        //state.error = action.error;
       })
       .addCase(fetchOrder.fulfilled, (state, action) => {
         state.isLoadingOrder = false;
         state.order = action.payload;
-        //state.orders = action.payload.orders;
       })
       .addCase(createOrder.pending, (state) => {
         state.orderRequest = true;

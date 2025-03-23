@@ -2,6 +2,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TIngredient, TConstructorIngredient } from '@utils-types';
+import { stat } from 'fs';
 
 type TBurgerConstructorState = {
   bun: TIngredient | null;
@@ -54,7 +55,8 @@ export const burgerConstructorSlice = createSlice({
       }
     },
     resetConstructor(state) {
-      state = initialState;
+      state.bun = null;
+      state.ingredients = [];
     }
   },
   selectors: {
