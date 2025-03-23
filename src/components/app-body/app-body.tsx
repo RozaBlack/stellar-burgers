@@ -16,6 +16,7 @@ import { useEffect } from 'react';
 import { useDispatch } from '../../services/store';
 import { fetchIngredients } from '../../services/slices/ingredients';
 import { fetchUser } from '../../services/slices/user';
+import { resetOrderModal } from '../../services/slices/orders';
 
 import {
   Modal,
@@ -32,6 +33,7 @@ export const AppBody = () => {
   const background = location.state?.background;
 
   const modalClose = () => {
+    dispatch(resetOrderModal());
     navigate(-1);
   };
 
