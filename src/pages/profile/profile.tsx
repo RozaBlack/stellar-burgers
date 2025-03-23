@@ -8,10 +8,6 @@ export const Profile: FC = () => {
   const dispatch = useDispatch();
   /** TODO: взять переменную из стора */
   const user = useSelector(getUserSelector);
-  /*const user = {
-    name: '',
-    email: ''
-  };*/
 
   const [formValue, setFormValue] = useState({
     name: user.name,
@@ -62,6 +58,4 @@ export const Profile: FC = () => {
       handleInputChange={handleInputChange}
     />
   );
-
-  return null;
 };

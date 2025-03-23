@@ -34,21 +34,17 @@ export const ingredientSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchIngredients.pending, (state) => {
-        //console.log(`pending`);
         state.isLoading = true;
         state.error = null;
       })
       .addCase(fetchIngredients.rejected, (state, action) => {
-        //console.log('rejected');
-        //console.log(action.error);
         state.isLoading = false;
         state.error = action.error;
       })
       .addCase(fetchIngredients.fulfilled, (state, action) => {
-        //console.log(`fulfilled: ${action.payload}`);
         state.isLoading = false;
         state.ingredients = action.payload;
-        //console.log(action.payload);
+        state.error = null;
       });
   }
 });

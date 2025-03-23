@@ -4,8 +4,8 @@ import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 
 import { useSelector, useDispatch } from '../../services/store';
-import { getIngredientsSelector } from '../../services/slices/ingridients';
-import { getOrderSelector, getOrder } from '../../services/slices/orders';
+import { getIngredientsSelector } from '../../services/slices/ingredients';
+import { getOrderSelector, fetchOrder } from '../../services/slices/orders';
 import { useParams } from 'react-router-dom';
 
 export const OrderInfo: FC = () => {
@@ -14,10 +14,10 @@ export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
   const orderData = useSelector(getOrderSelector);
 
-  const ingredients: TIngredient[] = useSelector(getIngredientsSelector);
+  const ingredients = useSelector(getIngredientsSelector);
 
   useEffect(() => {
-    dispatch(getOrder(number));
+    dispatch(fetchOrder(number));
   }, [dispatch]);
 
   /* Готовим данные для отображения */

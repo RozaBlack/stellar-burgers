@@ -8,7 +8,8 @@ import { getBurgerIngredientSelector } from '../../services/slices/burger-constr
 import {
   getOrderRequestSelector,
   getOrderSelector,
-  createOrder
+  createOrder,
+  resetOrderModal
 } from '../../services/slices/orders';
 
 import { getUserAuthenticatedSelector } from '../../services/slices/user';
@@ -19,12 +20,6 @@ export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
   const constructorItems = useSelector(getBurgerIngredientSelector);
   const isAuthenticated = useSelector(getUserAuthenticatedSelector);
-  /*{
-    bun: {
-      price: 0
-    },
-    ingredients: []
-  };*/
 
   const orderRequest = useSelector(getOrderRequestSelector);
 
@@ -43,11 +38,12 @@ export const BurgerConstructor: FC = () => {
       constructorItems.bun._id
     ];
 
-    console.log(order);
-
     dispatch(createOrder(order));
   };
-  const closeOrderModal = () => {};
+
+  const closeOrderModal = () => {
+    dispatch(resetOrderModal());
+  };
 
   const price = useMemo(
     () =>
@@ -58,8 +54,6 @@ export const BurgerConstructor: FC = () => {
       ),
     [constructorItems]
   );
-
-  //return null;
 
   return (
     <BurgerConstructorUI

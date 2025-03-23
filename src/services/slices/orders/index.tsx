@@ -24,14 +24,18 @@ const initialState: TOrdersState = {
   order: null
 };
 
-export const getOrders = createAsyncThunk(
-  'orders/getOrders',
+export const fetchOrders = createAsyncThunk(
+  'orders/fetch',
   async () => await getOrdersApi()
 );
 
-export const getOrder = createAsyncThunk(
-  'orders/getOrder',
-  async (orderApi: number) => await getOrderByNumberApi(orderApi)
+export const fetchOrder = createAsyncThunk(
+  'order/fetch',
+  async (orderApi: number) => {
+    const res = await getOrderByNumberApi(orderApi);
+
+    return res.orders[0];
+  }
 );
 
 export const createOrder = createAsyncThunk(
@@ -42,7 +46,11 @@ export const createOrder = createAsyncThunk(
 export const ordersSlice = createSlice({
   name: 'orders',
   initialState,
-  reducers: {},
+  reducers: {
+    resetOrderModal(state) {
+      state.order = null;
+    }
+  },
   selectors: {
     getOrdersSelector: (state) => state.orders,
     getOrdersIsLoadingSelector: (state) => state.isLoadingOrders,
@@ -52,54 +60,41 @@ export const ordersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getOrders.pending, (state) => {
-        //console.log(`pending`);
+      .addCase(fetchOrders.pending, (state) => {
         state.isLoadingOrders = true;
         state.error = null;
       })
-      .addCase(getOrders.rejected, (state, action) => {
-        //console.log('rejected');
-        //console.log(action.error);
+      .addCase(fetchOrders.rejected, (state, action) => {
         state.isLoadingOrders = false;
         state.error = action.error;
       })
-      .addCase(getOrders.fulfilled, (state, action) => {
-        //console.log(`fulfilled: ${action.payload}`);
+      .addCase(fetchOrders.fulfilled, (state, action) => {
         state.isLoadingOrders = false;
         state.orders = action.payload;
-        //console.log(action.payload);
-      })
-      .addCase(getOrder.pending, (state) => {
-        //console.log(`pending`);
-        state.isLoadingOrder = true;
         state.error = null;
       })
-      .addCase(getOrder.rejected, (state, action) => {
-        //console.log('rejected');
-        //console.log(action.error);
-        state.isLoadingOrder = false;
-        state.error = action.error;
+      .addCase(fetchOrder.pending, (state) => {
+        state.isLoadingOrder = true;
+        //state.error = null;
       })
-      .addCase(getOrder.fulfilled, (state, action) => {
-        //console.log(`fulfilled: ${action.payload}`);
+      .addCase(fetchOrder.rejected, (state, action) => {
         state.isLoadingOrder = false;
-        state.orders = action.payload.orders;
-        //console.log(action.payload);
+        //state.error = action.error;
+      })
+      .addCase(fetchOrder.fulfilled, (state, action) => {
+        state.isLoadingOrder = false;
+        state.order = action.payload;
+        //state.orders = action.payload.orders;
       })
       .addCase(createOrder.pending, (state) => {
-        //console.log(`pending`);
         state.orderRequest = true;
       })
       .addCase(createOrder.rejected, (state) => {
-        //console.log('rejected');
-        //console.log(action.error);
         state.orderRequest = false;
       })
       .addCase(createOrder.fulfilled, (state, action) => {
-        //console.log(`fulfilled: ${action.payload}`);
         state.orderRequest = false;
         state.order = action.payload.order;
-        //console.log(action.payload);
       });
   }
 });
@@ -111,3 +106,5 @@ export const {
   getOrderIsLoadingSelector,
   getOrderRequestSelector
 } = ordersSlice.selectors;
+
+export const { resetOrderModal } = ordersSlice.actions;

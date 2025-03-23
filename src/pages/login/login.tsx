@@ -23,13 +23,9 @@ export const Login: FC = () => {
 
     try {
       const res = await dispatch(loginUser({ email, password })).unwrap();
-      //.then((payload) => {
-      //  setCookie('accessToken', payload.accessToken);
-      //  localStorage.setItem('refreshToken', payload.refreshToken);
       if (res.success) {
         return navigate('/');
       }
-      //});
     } catch (_) {}
   };
 

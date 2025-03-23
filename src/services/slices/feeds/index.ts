@@ -39,21 +39,17 @@ export const feedsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchFeeds.pending, (state) => {
-        //console.log(`pending`);
         state.isLoading = true;
         state.error = null;
       })
       .addCase(fetchFeeds.rejected, (state, action) => {
-        //console.log('rejected');
-        //console.log(action.error);
         state.isLoading = false;
         state.error = action.error;
       })
       .addCase(fetchFeeds.fulfilled, (state, action) => {
-        //console.log(`fulfilled: ${action.payload}`);
         state.isLoading = false;
         state.feeds = action.payload;
-        //console.log(action.payload);
+        state.error = null;
       });
   }
 });

@@ -19,7 +19,6 @@ export const FeedInfo: FC = () => {
   /** TODO: взять переменные из стора */
   const orders: TOrder[] = useSelector(getFeedsOrdersSelector);
   const feed = useSelector(getFeedsSelector);
-
   const readyOrders = getOrders(orders, 'done');
 
   const pendingOrders = getOrders(orders, 'pending');
@@ -28,7 +27,10 @@ export const FeedInfo: FC = () => {
     <FeedInfoUI
       readyOrders={readyOrders}
       pendingOrders={pendingOrders}
-      feed={feed}
+      feed={{
+        total: feed.total,
+        totalToday: feed.totalToday
+      }}
     />
   );
 };

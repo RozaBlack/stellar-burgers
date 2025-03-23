@@ -36,8 +36,8 @@ const initialState: TUserState = {
   }
 };
 
-export const getUser = createAsyncThunk(
-  'user/getUser',
+export const fetchUser = createAsyncThunk(
+  'user/fetch',
   async () => await getUserApi()
 );
 
@@ -76,11 +76,7 @@ export const updateUser = createAsyncThunk(
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {
-    resetData(state) {
-      state = initialState;
-    }
-  },
+  reducers: {},
   selectors: {
     getUserAuthenticatedSelector: (state) => state.isAuthenticated,
     getUserSelector: (state) => state.user,
@@ -90,17 +86,18 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getUser.pending, (state) => {
-        state.isAuthChecked = true;
+      .addCase(fetchUser.pending, (state) => {
+        //state.isAuthChecked = true;
         state.error = null;
       })
-      .addCase(getUser.rejected, (state, action) => {
+      .addCase(fetchUser.rejected, (state, action) => {
         state.isAuthChecked = true;
         state.error = action.error;
       })
-      .addCase(getUser.fulfilled, (state, action) => {
+      .addCase(fetchUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.isAuthenticated = true;
+        state.isAuthChecked = true;
       })
 
       .addCase(registerUser.pending, (state) => {
@@ -112,6 +109,7 @@ export const userSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.isAuthenticated = true;
+        state.registerError = null;
       })
 
       .addCase(loginUser.pending, (state) => {
@@ -123,6 +121,7 @@ export const userSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.isAuthenticated = true;
+        state.loginError = null;
       })
 
       .addCase(logoutUser.pending, (state) => {
@@ -134,6 +133,7 @@ export const userSlice = createSlice({
       .addCase(logoutUser.fulfilled, (state) => {
         state.isAuthenticated = false;
         state.user = initialState.user;
+        state.error = null;
       })
 
       .addCase(updateUser.pending, (state) => {
@@ -144,6 +144,7 @@ export const userSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
+        state.error = null;
       });
   }
 });
@@ -155,5 +156,3 @@ export const {
   getLoginErrorMessageSelector,
   getRegisterErrorMessageSelector
 } = userSlice.selectors;
-
-export const { resetData } = userSlice.actions;
