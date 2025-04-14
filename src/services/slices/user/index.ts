@@ -24,7 +24,7 @@ type TUserState = {
   user: TUser;
 };
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   isAuthChecked: false,
   isAuthenticated: false,
   registerError: null,
@@ -87,7 +87,6 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchUser.pending, (state) => {
-        //state.isAuthChecked = true;
         state.error = null;
       })
       .addCase(fetchUser.rejected, (state, action) => {
@@ -156,3 +155,5 @@ export const {
   getLoginErrorMessageSelector,
   getRegisterErrorMessageSelector
 } = userSlice.selectors;
+
+export const userReducer = userSlice.reducer;
