@@ -15,7 +15,7 @@ type TOrdersState = {
   order: TOrder | null;
 };
 
-const initialState: TOrdersState = {
+export const initialState: TOrdersState = {
   isLoadingOrders: true,
   isLoadingOrder: true,
   orderRequest: false,
@@ -105,3 +105,4 @@ export const {
 } = ordersSlice.selectors;
 
 export const { resetOrderModal } = ordersSlice.actions;
+export const ordersReducer = ordersSlice.reducer;

@@ -12,7 +12,7 @@ type TFeedsState = {
   feeds: TOrdersData;
 };
 
-const initialState: TFeedsState = {
+export const initialState: TFeedsState = {
   isLoading: true,
   error: null,
   feeds: {
